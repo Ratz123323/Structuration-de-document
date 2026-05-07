@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block contenu %}
+<section>
+  <h2>Consultation des articles</h2>
+
+  <form method="get" action="{{ url_for('consultation') }}">
+    <label>
+      Source
+      <select name="source_id">
+        <option value="">Toutes les sources</option>
+        {% for source in sources %}
+          <option value="{{ source._id }}" {% if filtres.source_id == source._id %}selected{% endif %}>
+            {{ source.nom }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>
+      Date de debut
+      <input type="date" name="date_debut" value="{{ filtres.date_debut }}">
+    </label>
+
+    <label>
+      Date de fin
+      <input type="date" name="date_fin" value="{{ filtres.date_fin }}">
+    </label>
+
+    <label>
+      Texte dans le titre
+      <input type="text" name="texte" value="{{ filtres.texte }}">
+    </label>
+
+    <label>
+      Mot-cle
+      <input type="text" name="mot_cle" value="{{ filtres.mot_cle }}">
+    </label>
+
+    <button type="submit">Rechercher</button>
+  </form>
+</section>
+
+<section>
+  <h2>Articles</h2>
+
+  {% if articles %}
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Date de publication</th>
+          <th>Titre</th>
+          <th>Mots-cles</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for article in articles %}
+          <tr>
+            <td>{{ article.source_nom }}</td>
+            <td>{{ article.date_publication }}</td>
+            <td><a href="{{ article.url }}" target="_blank">{{ article.titre }}</a></td>
+            <td>{{ article.mots_cles|join(", ") }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Aucun article trouve.</p>
+  {% endif %}
+</section>
+{% endblock %}

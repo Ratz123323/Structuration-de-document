@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block contenu %}
+<section>
+  <h2>Gestion des abonnements</h2>
+
+  {% if erreur %}
+    <p class="erreur">{{ erreur }}</p>
+  {% endif %}
+
+  {% if message %}
+    <p class="message">{{ message }}</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('ajouter_source') }}">
+    <label>
+      Nom de la source
+      <input type="text" name="nom" placeholder="Le Monde" required>
+    </label>
+
+    <label>
+      URL du sitemap
+      <input type="url" name="sitemap_url" placeholder="https://www.lemonde.fr/sitemap_news.xml" required>
+    </label>
+
+    <label>
+      Frequence de recuperation en heures
+      <input type="number" name="frequence_heures" value="24" min="1" required>
+    </label>
+
+    <button type="submit">Ajouter l'abonnement</button>
+  </form>
+</section>
+
+<section>
+  <h2>Sources abonnees</h2>
+
+  {% if sources %}
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Sitemap</th>
+          <th>Frequence</th>
+          <th>Abonnement</th>
+          <th>Derniere recuperation</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for source in sources %}
+          <tr>
+            <td>{{ source.nom }}</td>
+            <td><a href="{{ source.sitemap_url }}" target="_blank">{{ source.sitemap_url }}</a></td>
+            <td>{{ source.frequence_heures }} h</td>
+            <td>{{ source.date_abonnement }}</td>
+            <td>{{ source.derniere_recuperation }}</td>
+            <td>
+              <form method="post" action="{{ url_for('recuperer_source', source_id=source._id) }}">
+                <button type="submit">Recuperer</button>
+              </form>
+              <form method="post" action="{{ url_for('supprimer_source', source_id=source._id) }}">
+                <button type="submit">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Aucun abonnement enregistre.</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,86 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  color: #222;
+  background: #f7f7f7;
+}
+
+header {
+  background: #202020;
+  color: white;
+  padding: 16px 32px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+nav a {
+  color: white;
+}
+
+main {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 24px;
+}
+
+section {
+  background: white;
+  border: 1px solid #ddd;
+  margin-bottom: 24px;
+  padding: 20px;
+}
+
+form {
+  display: grid;
+  gap: 14px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #bbb;
+}
+
+select {
+  padding: 8px;
+  border: 1px solid #bbb;
+}
+
+button {
+  width: fit-content;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.erreur {
+  color: #a40000;
+  font-weight: bold;
+}
+
+.message {
+  color: #166400;
+  font-weight: bold;
+}
