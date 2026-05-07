@@ -48,3 +48,15 @@ Filtres disponibles :
 - mot-cle.
 
 Les articles sont affiches avec leur source, leur date de publication, leur titre cliquable et les mots-cles presents dans le sitemap. L'affichage est limite aux 200 premiers resultats afin de conserver une page consultable.
+
+### Horodatage des consultations
+
+Lorsqu'un utilisateur clique sur un titre, l'application enregistre une entree dans `G_AP_consultations` avec :
+
+- l'identifiant de l'article ;
+- l'identifiant de la source ;
+- le titre ;
+- l'URL ;
+- la date et l'heure de consultation.
+
+La page de consultation permet ensuite de rechercher des articles par intervalle de date et heure de consultation.

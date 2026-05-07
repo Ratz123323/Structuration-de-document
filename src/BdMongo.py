@@ -126,6 +126,27 @@ class BdMongo:
         if mot_cle:
             requete["mots_cles"] = {"$regex": re.escape(mot_cle), "$options": "i"}
 
+        consultation_debut = _convertir_datetime_formulaire(
+            filtres.get("consultation_debut")
+        )
+        consultation_fin = _convertir_datetime_formulaire(
+            filtres.get("consultation_fin")
+        )
+        if consultation_debut or consultation_fin:
+            requete_consultation = {}
+            if consultation_debut or consultation_fin:
+                requete_consultation["date_consultation"] = {}
+            if consultation_debut:
+                requete_consultation["date_consultation"]["$gte"] = consultation_debut
+            if consultation_fin:
+                requete_consultation["date_consultation"]["$lte"] = consultation_fin
+
+            article_ids = [
+                consultation["article_id"]
+                for consultation in self.consultations.find(requete_consultation)
+            ]
+            requete["_id"] = {"$in": article_ids}
+
         articles = []
         curseur = self.articles.find(requete).sort("date_publication", DESCENDING)
         for article in curseur.limit(200):
@@ -135,6 +156,21 @@ class BdMongo:
             articles.append(article)
 
         return articles
+
+    def trouver_article(self, article_id):
+        """Retourne un article a partir de son identifiant."""
+        return self.articles.find_one({"_id": ObjectId(article_id)})
+
+    def enregistrer_consultation(self, article):
+        """Enregistre l'horodatage d'un clic sur un titre."""
+        document = {
+            "article_id": article["_id"],
+            "source_id": article["source_id"],
+            "titre": article["titre"],
+            "url": article["url"],
+            "date_consultation": datetime.now(timezone.utc),
+        }
+        return self.consultations.insert_one(document).inserted_id
 
 
 def get_bd():
@@ -149,6 +185,12 @@ def _formater_date(valeur):
 
 
 def _convertir_date_formulaire(valeur):
+    if not valeur:
+        return None
+    return datetime.fromisoformat(valeur).replace(tzinfo=timezone.utc)
+
+
+def _convertir_datetime_formulaire(valeur):
     if not valeur:
         return None
     return datetime.fromisoformat(valeur).replace(tzinfo=timezone.utc)

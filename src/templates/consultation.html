@@ -18,12 +18,12 @@
     </label>
 
     <label>
-      Date de debut
+      Publication debut
       <input type="date" name="date_debut" value="{{ filtres.date_debut }}">
     </label>
 
     <label>
-      Date de fin
+      Publication fin
       <input type="date" name="date_fin" value="{{ filtres.date_fin }}">
     </label>
 
@@ -35,6 +35,16 @@
     <label>
       Mot-cle
       <input type="text" name="mot_cle" value="{{ filtres.mot_cle }}">
+    </label>
+
+    <label>
+      Consultation debut
+      <input type="datetime-local" name="consultation_debut" value="{{ filtres.consultation_debut }}">
+    </label>
+
+    <label>
+      Consultation fin
+      <input type="datetime-local" name="consultation_fin" value="{{ filtres.consultation_fin }}">
     </label>
 
     <button type="submit">Rechercher</button>
@@ -59,7 +69,7 @@
           <tr>
             <td>{{ article.source_nom }}</td>
             <td>{{ article.date_publication }}</td>
-            <td><a href="{{ article.url }}" target="_blank">{{ article.titre }}</a></td>
+            <td><a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">{{ article.titre }}</a></td>
             <td>{{ article.mots_cles|join(", ") }}</td>
           </tr>
         {% endfor %}

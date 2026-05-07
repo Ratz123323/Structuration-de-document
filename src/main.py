@@ -1,6 +1,6 @@
 """Point d'entree de l'application Flask."""
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, abort, redirect, render_template, request, url_for
 
 from BdMongo import get_bd
 from sitemap import recuperer_articles_sitemap
@@ -29,6 +29,8 @@ def consultation():
         "date_fin": request.args.get("date_fin", ""),
         "texte": request.args.get("texte", ""),
         "mot_cle": request.args.get("mot_cle", ""),
+        "consultation_debut": request.args.get("consultation_debut", ""),
+        "consultation_fin": request.args.get("consultation_fin", ""),
     }
     sources = bd.lister_sources()
     articles = bd.rechercher_articles(filtres)
@@ -72,6 +74,16 @@ def ajouter_source():
 def supprimer_source(source_id):
     bd.supprimer_source(source_id)
     return redirect(url_for("admin"))
+
+
+@app.route("/articles/<article_id>/ouvrir")
+def ouvrir_article(article_id):
+    article = bd.trouver_article(article_id)
+    if article is None:
+        abort(404)
+
+    bd.enregistrer_consultation(article)
+    return redirect(article["url"])
 
 
 @app.route("/admin/sources/<source_id>/recuperer", methods=["POST"])
