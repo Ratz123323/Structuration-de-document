@@ -60,3 +60,15 @@ Lorsqu'un utilisateur clique sur un titre, l'application enregistre une entree d
 - la date et l'heure de consultation.
 
 La page de consultation permet ensuite de rechercher des articles par intervalle de date et heure de consultation.
+
+### Nuage de mots SVG
+
+Le nuage de mots est construit a partir des titres publies dans une periode donnee.
+
+Parametres disponibles :
+
+- date de debut de publication ;
+- date de fin de publication ;
+- nombre `n` de mots a conserver.
+
+L'application compte les mots presents dans les titres, garde les `n` plus frequents, affiche le resultat au format SVG et propose le telechargement du fichier `nuage_mots.svg`.

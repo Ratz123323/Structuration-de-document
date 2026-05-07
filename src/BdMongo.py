@@ -172,6 +172,21 @@ class BdMongo:
         }
         return self.consultations.insert_one(document).inserted_id
 
+    def titres_pour_nuage(self, date_debut, date_fin):
+        """Retourne les titres publies dans une periode donnee."""
+        requete = {}
+        debut = _convertir_date_formulaire(date_debut)
+        fin = _convertir_date_formulaire(date_fin)
+
+        if debut or fin:
+            requete["date_publication"] = {}
+            if debut:
+                requete["date_publication"]["$gte"] = debut
+            if fin:
+                requete["date_publication"]["$lte"] = fin
+
+        return [article["titre"] for article in self.articles.find(requete, {"titre": 1})]
+
 
 def get_bd():
     """Retourne un acces a la base MongoDB du projet."""

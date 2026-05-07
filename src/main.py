@@ -1,9 +1,10 @@
 """Point d'entree de l'application Flask."""
 
-from flask import Flask, abort, redirect, render_template, request, url_for
+from flask import Flask, Response, abort, redirect, render_template, request, url_for
 
 from BdMongo import get_bd
 from sitemap import recuperer_articles_sitemap
+from wordcloud_svg import generer_svg, mots_frequents
 
 app = Flask(__name__)
 bd = get_bd()
@@ -39,6 +40,43 @@ def consultation():
         sources=sources,
         articles=articles,
         filtres=filtres,
+    )
+
+
+@app.route("/nuage")
+def nuage():
+    date_debut = request.args.get("date_debut", "")
+    date_fin = request.args.get("date_fin", "")
+    nombre = int(request.args.get("nombre", "30") or 30)
+
+    titres = bd.titres_pour_nuage(date_debut, date_fin)
+    frequences = mots_frequents(titres, nombre)
+    svg = generer_svg(frequences)
+
+    return render_template(
+        "wordcloud.html",
+        date_debut=date_debut,
+        date_fin=date_fin,
+        nombre=nombre,
+        svg=svg,
+        frequences=frequences,
+    )
+
+
+@app.route("/nuage/telecharger")
+def telecharger_nuage():
+    date_debut = request.args.get("date_debut", "")
+    date_fin = request.args.get("date_fin", "")
+    nombre = int(request.args.get("nombre", "30") or 30)
+
+    titres = bd.titres_pour_nuage(date_debut, date_fin)
+    frequences = mots_frequents(titres, nombre)
+    svg = generer_svg(frequences)
+
+    return Response(
+        svg,
+        mimetype="image/svg+xml",
+        headers={"Content-Disposition": "attachment; filename=nuage_mots.svg"},
     )
 
 

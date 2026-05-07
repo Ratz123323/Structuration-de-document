@@ -84,3 +84,8 @@ td {
   color: #166400;
   font-weight: bold;
 }
+
+.svg-resultat {
+  overflow: auto;
+  border: 1px solid #ddd;
+}
