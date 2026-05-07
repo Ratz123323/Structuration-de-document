@@ -30,6 +30,10 @@
 
     <button type="submit">Ajouter l'abonnement</button>
   </form>
+
+  <form method="post" action="{{ url_for('recuperer_sources_a_jour') }}">
+    <button type="submit">Recuperer les sources dues</button>
+  </form>
 </section>
 
 <section>

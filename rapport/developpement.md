@@ -10,6 +10,7 @@ Ce document sert de brouillon pour la partie developpement du rapport.
 - suppression d'un abonnement ;
 - definition d'une frequence de recuperation en heures ;
 - recuperation manuelle des articles d'une source abonneee ;
+- recuperation des sources dont la minuterie est arrivee a echeance ;
 - stockage des titres dans MongoDB.
 
 ### Recuperation depuis un sitemap

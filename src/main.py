@@ -2,8 +2,8 @@
 
 from flask import Flask, Response, abort, redirect, render_template, request, url_for
 
+from articles import recuperer_articles_source, recuperer_sources_dues
 from BdMongo import get_bd
-from sitemap import recuperer_articles_sitemap
 from wordcloud_svg import generer_svg, mots_frequents
 
 app = Flask(__name__)
@@ -138,9 +138,7 @@ def recuperer_source(source_id):
         )
 
     try:
-        articles = recuperer_articles_sitemap(source)
-        total = bd.enregistrer_articles(articles)
-        bd.marquer_recuperation_source(source_id)
+        total = recuperer_articles_source(bd, source)
     except Exception as erreur:
         return render_template(
             "admin.html",
@@ -155,6 +153,30 @@ def recuperer_source(source_id):
         sources=sources,
         erreur=None,
         message=f"{total} article(s) enregistre(s).",
+    )
+
+
+@app.route("/admin/sources/recuperer-dues", methods=["POST"])
+def recuperer_sources_a_jour():
+    bilan = recuperer_sources_dues(bd)
+    sources = bd.lister_sources()
+
+    if not bilan:
+        message = "Aucune source a recuperer selon les minuteries."
+    else:
+        parties = []
+        for nom, total, erreur in bilan:
+            if erreur:
+                parties.append(f"{nom} : erreur")
+            else:
+                parties.append(f"{nom} : {total} article(s)")
+        message = " ; ".join(parties)
+
+    return render_template(
+        "admin.html",
+        sources=sources,
+        erreur=None,
+        message=message,
     )
 
 
