@@ -1,36 +1,63 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  color: #222;
-  background: #f7f7f7;
+  color: #1f2933;
+  background: #eef2f6;
 }
 
 header {
-  background: #202020;
   color: white;
-  padding: 16px 32px;
+  background: #181b22;
+  border-bottom: 4px solid #d45b68;
 }
 
-header h1 {
-  margin: 0 0 8px;
-  font-size: 24px;
+.entete-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.entete-page h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 nav a {
-  color: white;
+  color: #f8fafc;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
 }
 
 main {
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 24px auto;
   padding: 0 24px;
 }
 
 section {
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid #d9e0e8;
   margin-bottom: 24px;
-  padding: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 24px rgba(31, 41, 51, 0.08);
+}
+
+section h2 {
+  margin: 0 0 18px;
+  font-size: 24px;
 }
 
 form {
@@ -39,53 +66,77 @@ form {
 }
 
 .recherche-consultation h2 {
-  margin: -20px -20px 20px;
-  padding: 16px;
-  color: #d45b68;
+  margin: -24px -24px 22px;
+  padding: 18px;
+  color: #ff7180;
   background: #1f1f25;
   text-align: center;
 }
 
-.recherche-consultation form {
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+.recherche-consultation form,
+.formulaire-admin,
+.formulaire-nuage {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   align-items: end;
 }
 
 label {
   display: grid;
   gap: 6px;
+  font-weight: 700;
 }
 
-input {
-  padding: 8px;
-  border: 1px solid #bbb;
-}
-
+input,
 select {
-  padding: 8px;
-  border: 1px solid #bbb;
+  padding: 11px 12px;
+  border: 1px solid #bfccd8;
+  background: #fbfcfe;
+  font: inherit;
 }
 
 button {
   width: fit-content;
-  padding: 8px 12px;
-  border: 1px solid #333;
-  background: #333;
+  padding: 11px 14px;
+  border: 1px solid #1f1f25;
+  background: #1f1f25;
   color: white;
   cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.bouton-principal {
+  background: #1f1f25;
+  border-color: #1f1f25;
+}
+
+.bouton-secondaire {
+  color: #1f1f25;
+  background: white;
+  border-color: #95a3b3;
+}
+
+.bouton-danger {
+  background: #8f1d2c;
+  border-color: #8f1d2c;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  background: white;
 }
 
 th,
 td {
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
+  border-bottom: 1px solid #e1e7ee;
+  padding: 12px;
   text-align: left;
   vertical-align: top;
+}
+
+th {
+  background: #f4f7fa;
 }
 
 .erreur {
@@ -100,12 +151,14 @@ td {
 
 .svg-resultat {
   overflow: auto;
-  border: 1px solid #ddd;
+  border: 1px solid #d9e0e8;
+  background: white;
+  padding: 14px;
 }
 
 .colonnes-sources {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   gap: 24px;
 }
 
@@ -126,13 +179,16 @@ td {
 }
 
 .colonne-source li {
-  min-height: 56px;
+  min-height: 62px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #edf1f5;
 }
 
 .colonne-source a {
   color: #111;
-  font-size: 18px;
+  font-size: 17px;
   font-style: italic;
+  line-height: 1.25;
 }
 
 .colonne-source span {
@@ -142,16 +198,16 @@ td {
 
 .article-ligne {
   display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 10px;
+  grid-template-columns: 58px 1fr;
+  gap: 12px;
   align-items: start;
 }
 
 .article-ligne img,
 .image-article {
-  width: 46px;
-  height: 46px;
-  border: 1px solid #444;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #9aa8b6;
   object-fit: cover;
 }
 
@@ -160,11 +216,37 @@ td {
   place-items: center;
   color: #00838f;
   background: #eefafa;
-  font-size: 26px;
+  font-size: 24px;
 }
 
 .aucun-article-source {
   margin: 0;
   color: #666;
   font-style: italic;
+}
+
+.formulaire-secondaire {
+  margin-top: 14px;
+}
+
+.actions-table {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lien-telechargement {
+  display: inline-block;
+  padding: 11px 14px;
+  color: white;
+  background: #1f1f25;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .entete-page {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

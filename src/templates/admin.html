@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block contenu %}
-<section>
+<section class="section-admin">
   <h2>Gestion des abonnements</h2>
 
   {% if erreur %}
@@ -12,7 +12,7 @@
     <p class="message">{{ message }}</p>
   {% endif %}
 
-  <form method="post" action="{{ url_for('ajouter_source') }}">
+  <form class="formulaire-admin" method="post" action="{{ url_for('ajouter_source') }}">
     <label>
       Nom de la source
       <input type="text" name="nom" placeholder="Le Monde" required>
@@ -28,15 +28,15 @@
       <input type="number" name="frequence_heures" value="24" min="1" required>
     </label>
 
-    <button type="submit">Ajouter l'abonnement</button>
+    <button class="bouton-principal" type="submit">Ajouter l'abonnement</button>
   </form>
 
-  <form method="post" action="{{ url_for('recuperer_sources_a_jour') }}">
-    <button type="submit">Recuperer les sources dues</button>
+  <form class="formulaire-secondaire" method="post" action="{{ url_for('recuperer_sources_a_jour') }}">
+    <button class="bouton-secondaire" type="submit">Recuperer les sources dues</button>
   </form>
 </section>
 
-<section>
+<section class="section-admin">
   <h2>Sources abonnees</h2>
 
   {% if sources %}
@@ -59,12 +59,12 @@
             <td>{{ source.frequence_heures }} h</td>
             <td>{{ source.date_abonnement }}</td>
             <td>{{ source.derniere_recuperation }}</td>
-            <td>
+            <td class="actions-table">
               <form method="post" action="{{ url_for('recuperer_source', source_id=source._id) }}">
-                <button type="submit">Recuperer</button>
+                <button class="bouton-secondaire" type="submit">Recuperer</button>
               </form>
               <form method="post" action="{{ url_for('supprimer_source', source_id=source._id) }}">
-                <button type="submit">Supprimer</button>
+                <button class="bouton-danger" type="submit">Supprimer</button>
               </form>
             </td>
           </tr>

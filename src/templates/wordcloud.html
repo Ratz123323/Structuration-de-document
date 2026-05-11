@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block contenu %}
-<section>
+<section class="section-nuage">
   <h2>Nuage de mots</h2>
 
-  <form method="get" action="{{ url_for('nuage') }}">
+  <form class="formulaire-nuage" method="get" action="{{ url_for('nuage') }}">
     <label>
       Publication debut
       <input type="date" name="date_debut" value="{{ date_debut }}">
@@ -20,21 +20,21 @@
       <input type="number" name="nombre" value="{{ nombre }}" min="1" max="100">
     </label>
 
-    <button type="submit">Generer</button>
+    <button class="bouton-principal" type="submit">Generer</button>
   </form>
 </section>
 
-<section>
+<section class="section-nuage">
   <h2>Resultat SVG</h2>
   <div class="svg-resultat">
     {{ svg|safe }}
   </div>
   <p>
-    <a href="{{ url_for('telecharger_nuage', date_debut=date_debut, date_fin=date_fin, nombre=nombre) }}">Telecharger le SVG</a>
+    <a class="lien-telechargement" href="{{ url_for('telecharger_nuage', date_debut=date_debut, date_fin=date_fin, nombre=nombre) }}">Telecharger le SVG</a>
   </p>
 </section>
 
-<section>
+<section class="section-nuage">
   <h2>Mots retenus</h2>
   {% if frequences %}
     <table>

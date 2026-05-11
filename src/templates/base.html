@@ -8,12 +8,14 @@
   </head>
   <body>
     <header>
-      <h1>Nuage de mots d'actualite</h1>
-      <nav>
-        <a href="{{ url_for('consultation') }}">Consultation</a>
-        <a href="{{ url_for('nuage') }}">Nuage de mots</a>
-        <a href="{{ url_for('admin') }}">Administration</a>
-      </nav>
+      <div class="entete-page">
+        <h1>Nuage de mots d'actualite</h1>
+        <nav>
+          <a href="{{ url_for('consultation') }}">Consultation</a>
+          <a href="{{ url_for('nuage') }}">Nuage de mots</a>
+          <a href="{{ url_for('admin') }}">Administration</a>
+        </nav>
+      </div>
     </header>
     <main>
       {% block contenu %}{% endblock %}
