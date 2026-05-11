@@ -62,10 +62,19 @@
           <ul>
             {% for article in groupe.articles[:8] %}
               <li>
-                <a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">
-                  {{ article.titre }}
-                </a>
-                <span>{{ article.date_publication }}</span>
+                <div class="article-ligne">
+                  {% if article.image_url %}
+                    <img src="{{ article.image_url }}" alt="">
+                  {% else %}
+                    <div class="image-article">▧</div>
+                  {% endif %}
+                  <div>
+                    <a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">
+                      {{ article.titre }}
+                    </a>
+                    <span>{{ article.date_publication }}</span>
+                  </div>
+                </div>
               </li>
             {% endfor %}
           </ul>

@@ -126,8 +126,7 @@ td {
 }
 
 .colonne-source li {
-  display: grid;
-  gap: 4px;
+  min-height: 56px;
 }
 
 .colonne-source a {
@@ -139,4 +138,27 @@ td {
 .colonne-source span {
   color: #666;
   font-size: 13px;
+}
+
+.article-ligne {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.article-ligne img,
+.image-article {
+  width: 46px;
+  height: 46px;
+  border: 1px solid #444;
+  object-fit: cover;
+}
+
+.image-article {
+  display: grid;
+  place-items: center;
+  color: #00838f;
+  background: #eefafa;
+  font-size: 26px;
 }
