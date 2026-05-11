@@ -35,10 +35,12 @@ def consultation():
     }
     sources = bd.lister_sources()
     articles = bd.rechercher_articles(filtres)
+    articles_par_source = _regrouper_articles_par_source(articles)
     return render_template(
         "consultation.html",
         sources=sources,
         articles=articles,
+        articles_par_source=articles_par_source,
         filtres=filtres,
     )
 
@@ -178,6 +180,14 @@ def recuperer_sources_a_jour():
         erreur=None,
         message=message,
     )
+
+
+def _regrouper_articles_par_source(articles):
+    groupes = {}
+    for article in articles:
+        source = article.get("source_nom", "Source inconnue")
+        groupes.setdefault(source, []).append(article)
+    return [{"source": source, "articles": groupes[source]} for source in groupes]
 
 
 if __name__ == "__main__":

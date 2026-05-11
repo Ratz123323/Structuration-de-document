@@ -38,6 +38,19 @@ form {
   gap: 14px;
 }
 
+.recherche-consultation h2 {
+  margin: -20px -20px 20px;
+  padding: 16px;
+  color: #d45b68;
+  background: #1f1f25;
+  text-align: center;
+}
+
+.recherche-consultation form {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  align-items: end;
+}
+
 label {
   display: grid;
   gap: 6px;
@@ -88,4 +101,42 @@ td {
 .svg-resultat {
   overflow: auto;
   border: 1px solid #ddd;
+}
+
+.colonnes-sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.colonne-source h3 {
+  margin: 0 0 16px;
+  padding: 20px;
+  color: white;
+  background: #1f1f25;
+  text-align: center;
+}
+
+.colonne-source ul {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.colonne-source li {
+  display: grid;
+  gap: 4px;
+}
+
+.colonne-source a {
+  color: #111;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.colonne-source span {
+  color: #666;
+  font-size: 13px;
 }

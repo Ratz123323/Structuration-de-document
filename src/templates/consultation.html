@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block contenu %}
-<section>
-  <h2>Consultation des articles</h2>
+<section class="recherche-consultation">
+  <h2>Formulaire de recherche</h2>
 
   <form method="get" action="{{ url_for('consultation') }}">
     <label>
@@ -51,30 +51,27 @@
   </form>
 </section>
 
-<section>
-  <h2>Articles</h2>
+<section class="apercu-articles">
+  <h2>Apercu des articles</h2>
 
-  {% if articles %}
-    <table>
-      <thead>
-        <tr>
-          <th>Source</th>
-          <th>Date de publication</th>
-          <th>Titre</th>
-          <th>Mots-cles</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for article in articles %}
-          <tr>
-            <td>{{ article.source_nom }}</td>
-            <td>{{ article.date_publication }}</td>
-            <td><a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">{{ article.titre }}</a></td>
-            <td>{{ article.mots_cles|join(", ") }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  {% if articles_par_source %}
+    <div class="colonnes-sources">
+      {% for groupe in articles_par_source %}
+        <article class="colonne-source">
+          <h3>{{ groupe.source }}</h3>
+          <ul>
+            {% for article in groupe.articles[:8] %}
+              <li>
+                <a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">
+                  {{ article.titre }}
+                </a>
+                <span>{{ article.date_publication }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    </div>
   {% else %}
     <p>Aucun article trouve.</p>
   {% endif %}
