@@ -126,27 +126,6 @@ class BdMongo:
         if mot_cle:
             requete["mots_cles"] = {"$regex": re.escape(mot_cle), "$options": "i"}
 
-        consultation_debut = _convertir_datetime_formulaire(
-            filtres.get("consultation_debut")
-        )
-        consultation_fin = _convertir_datetime_formulaire(
-            filtres.get("consultation_fin")
-        )
-        if consultation_debut or consultation_fin:
-            requete_consultation = {}
-            if consultation_debut or consultation_fin:
-                requete_consultation["date_consultation"] = {}
-            if consultation_debut:
-                requete_consultation["date_consultation"]["$gte"] = consultation_debut
-            if consultation_fin:
-                requete_consultation["date_consultation"]["$lte"] = consultation_fin
-
-            article_ids = [
-                consultation["article_id"]
-                for consultation in self.consultations.find(requete_consultation)
-            ]
-            requete["_id"] = {"$in": article_ids}
-
         articles = []
         curseur = self.articles.find(requete).sort("date_publication", DESCENDING)
         for article in curseur.limit(200):
@@ -171,6 +150,32 @@ class BdMongo:
             "date_consultation": datetime.now(timezone.utc),
         }
         return self.consultations.insert_one(document).inserted_id
+
+    def rechercher_consultations(self, filtres):
+        """Recherche l'historique des articles consultes."""
+        requete = {}
+        debut = _convertir_datetime_formulaire(filtres.get("consultation_debut"))
+        fin = _convertir_datetime_formulaire(filtres.get("consultation_fin"))
+
+        if debut or fin:
+            requete["date_consultation"] = {}
+            if debut:
+                requete["date_consultation"]["$gte"] = debut
+            if fin:
+                requete["date_consultation"]["$lte"] = fin
+
+        consultations = []
+        curseur = self.consultations.find(requete).sort("date_consultation", DESCENDING)
+        for consultation in curseur.limit(200):
+            consultation["_id"] = str(consultation["_id"])
+            consultation["article_id"] = str(consultation["article_id"])
+            consultation["source_id"] = str(consultation["source_id"])
+            consultation["date_consultation"] = _formater_date(
+                consultation.get("date_consultation")
+            )
+            consultations.append(consultation)
+
+        return consultations
 
     def titres_pour_nuage(self, date_debut, date_fin):
         """Retourne les titres publies dans une periode donnee."""

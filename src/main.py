@@ -30,17 +30,29 @@ def consultation():
         "date_fin": request.args.get("date_fin", ""),
         "texte": request.args.get("texte", ""),
         "mot_cle": request.args.get("mot_cle", ""),
-        "consultation_debut": request.args.get("consultation_debut", ""),
-        "consultation_fin": request.args.get("consultation_fin", ""),
     }
     sources = bd.lister_sources()
     articles = bd.rechercher_articles(filtres)
-    articles_par_source = _regrouper_articles_par_source(articles)
+    articles_par_source = _regrouper_articles_par_source(sources, articles, filtres)
     return render_template(
         "consultation.html",
         sources=sources,
         articles=articles,
         articles_par_source=articles_par_source,
+        filtres=filtres,
+    )
+
+
+@app.route("/historique")
+def historique():
+    filtres = {
+        "consultation_debut": request.args.get("consultation_debut", ""),
+        "consultation_fin": request.args.get("consultation_fin", ""),
+    }
+    consultations = bd.rechercher_consultations(filtres)
+    return render_template(
+        "historique.html",
+        consultations=consultations,
         filtres=filtres,
     )
 
@@ -182,11 +194,19 @@ def recuperer_sources_a_jour():
     )
 
 
-def _regrouper_articles_par_source(articles):
-    groupes = {}
+def _regrouper_articles_par_source(sources, articles, filtres):
+    groupes = {source["nom"]: [] for source in sources}
+    if filtres.get("source_id"):
+        groupes = {
+            source["nom"]: []
+            for source in sources
+            if source["_id"] == filtres.get("source_id")
+        }
+
     for article in articles:
         source = article.get("source_nom", "Source inconnue")
         groupes.setdefault(source, []).append(article)
+
     return [{"source": source, "articles": groupes[source]} for source in groupes]
 
 

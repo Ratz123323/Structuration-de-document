@@ -75,7 +75,8 @@ form {
 
 .recherche-consultation form,
 .formulaire-admin,
-.formulaire-nuage {
+.formulaire-nuage,
+.formulaire-historique {
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   align-items: end;
 }
