@@ -59,25 +59,29 @@
       {% for groupe in articles_par_source %}
         <article class="colonne-source">
           <h3>{{ groupe.source }}</h3>
-          <ul>
-            {% for article in groupe.articles[:8] %}
-              <li>
-                <div class="article-ligne">
-                  {% if article.image_url %}
-                    <img src="{{ article.image_url }}" alt="">
-                  {% else %}
-                    <div class="image-article">▧</div>
-                  {% endif %}
-                  <div>
-                    <a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">
-                      {{ article.titre }}
-                    </a>
-                    <span>{{ article.date_publication }}</span>
+          {% if groupe.articles %}
+            <ul>
+              {% for article in groupe.articles[:8] %}
+                <li>
+                  <div class="article-ligne">
+                    {% if article.image_url %}
+                      <img src="{{ article.image_url }}" alt="">
+                    {% else %}
+                      <div class="image-article">▧</div>
+                    {% endif %}
+                    <div>
+                      <a href="{{ url_for('ouvrir_article', article_id=article._id) }}" target="_blank">
+                        {{ article.titre }}
+                      </a>
+                      <span>{{ article.date_publication }}</span>
+                    </div>
                   </div>
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="aucun-article-source">Aucun article recupere.</p>
+          {% endif %}
         </article>
       {% endfor %}
     </div>

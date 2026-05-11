@@ -1,6 +1,7 @@
 """Recuperation et analyse des sitemaps d'actualite."""
 
 from datetime import datetime, timezone
+import re
 from urllib.parse import urlparse
 from xml.etree import ElementTree
 
@@ -78,6 +79,8 @@ def _extraire_articles(racine, source):
         date_publication = date_publication or _texte_premier(noeud_url, "lastmod")
         mots_cles = _texte_premier(noeud_url, "keywords")
         image_url = _image_depuis_noeud(noeud_url)
+        if not image_url:
+            image_url = _image_depuis_article(loc)
 
         if not loc or not titre:
             continue
@@ -135,6 +138,27 @@ def _image_depuis_noeud(noeud_url):
         if _nom_local(enfant.tag) == "loc" and "image" in enfant.tag.lower():
             if enfant.text:
                 return enfant.text.strip()
+    return ""
+
+
+def _image_depuis_article(url):
+    try:
+        reponse = requests.get(url, timeout=5, headers={"User-Agent": "Mozilla/5.0"})
+        reponse.raise_for_status()
+    except Exception:
+        return ""
+
+    html = reponse.text
+    motifs = [
+        r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+        r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']',
+    ]
+    for motif in motifs:
+        resultat = re.search(motif, html, re.IGNORECASE)
+        if resultat:
+            return resultat.group(1).strip()
     return ""
 
 

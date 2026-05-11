@@ -162,3 +162,9 @@ td {
   background: #eefafa;
   font-size: 26px;
 }
+
+.aucun-article-source {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
