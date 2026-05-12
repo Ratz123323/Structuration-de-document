@@ -1,6 +1,7 @@
 """Acces a la base MongoDB du projet."""
 
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 import re
 
 from bson import ObjectId
@@ -17,6 +18,7 @@ from config import (
 )
 
 DATE_FORMAT = "%Y-%m-%d %H:%M"
+TIMEZONE_LOCAL = ZoneInfo("Europe/Paris")
 
 
 class BdMongo:
@@ -201,7 +203,11 @@ def get_bd():
 def _formater_date(valeur):
     if valeur is None:
         return ""
-    return valeur.strftime(DATE_FORMAT)
+    # Converti l'heure en heure locale, sinon y a du décallage horraire
+    if valeur.tzinfo is None:
+        valeur = valeur.replace(tzinfo=timezone.utc)
+    valeur_locale = valeur.astimezone(TIMEZONE_LOCAL)
+    return valeur_locale.strftime(DATE_FORMAT)
 
 
 def _convertir_date_formulaire(valeur):

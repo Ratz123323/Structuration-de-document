@@ -8,7 +8,6 @@ body {
 header {
   color: white;
   background: #181b22;
-  border-bottom: 4px solid #d45b68;
 }
 
 .entete-page {
@@ -68,7 +67,7 @@ form {
 .recherche-consultation h2 {
   margin: -24px -24px 22px;
   padding: 18px;
-  color: #ff7180;
+  color: white;
   background: #1f1f25;
   text-align: center;
 }
