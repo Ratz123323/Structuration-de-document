@@ -6,7 +6,7 @@
 
   <form class="formulaire-historique" method="get" action="{{ url_for('historique') }}">
     <label>
-      Date et heure debut
+      Date et heure début
       <input type="datetime-local" name="consultation_debut" value="{{ filtres.consultation_debut }}">
     </label>
 
@@ -20,7 +20,7 @@
 </section>
 
 <section class="section-historique">
-  <h2>Articles consultes</h2>
+  <h2>Articles consultés</h2>
 
   {% if consultations %}
     <table>
@@ -42,7 +42,7 @@
       </tbody>
     </table>
   {% else %}
-    <p>Aucun article consulte.</p>
+    <p>Aucun article consulté.</p>
   {% endif %}
 </section>
 {% endblock %}

@@ -24,7 +24,7 @@
     </label>
 
     <label>
-      Frequence de recuperation en heures
+      Fréquence de récupération en heures
       <input type="number" name="frequence_heures" value="24" min="1" required>
     </label>
 
@@ -32,12 +32,12 @@
   </form>
 
   <form class="formulaire-secondaire" method="post" action="{{ url_for('recuperer_sources_a_jour') }}">
-    <button class="bouton-secondaire" type="submit">Recuperer les sources dues</button>
+    <button class="bouton-secondaire" type="submit">Récupérer les sources dues</button>
   </form>
 </section>
 
 <section class="section-admin">
-  <h2>Sources abonnees</h2>
+  <h2>Sources abonnées</h2>
 
   {% if sources %}
     <table>
@@ -45,9 +45,9 @@
         <tr>
           <th>Source</th>
           <th>Sitemap</th>
-          <th>Frequence</th>
+          <th>Fréquence</th>
           <th>Abonnement</th>
-          <th>Derniere recuperation</th>
+          <th>Dernière récupération</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -61,7 +61,7 @@
             <td>{{ source.derniere_recuperation }}</td>
             <td class="actions-table">
               <form method="post" action="{{ url_for('recuperer_source', source_id=source._id) }}">
-                <button class="bouton-secondaire" type="submit">Recuperer</button>
+                <button class="bouton-secondaire" type="submit">Récupérer</button>
               </form>
               <form method="post" action="{{ url_for('supprimer_source', source_id=source._id) }}">
                 <button class="bouton-danger" type="submit">Supprimer</button>
@@ -72,7 +72,7 @@
       </tbody>
     </table>
   {% else %}
-    <p>Aucun abonnement enregistre.</p>
+    <p>Aucun abonnement enregistré.</p>
   {% endif %}
 </section>
 {% endblock %}

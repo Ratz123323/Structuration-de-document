@@ -18,7 +18,7 @@
     </label>
 
     <label>
-      Publication debut
+      Publication début
       <input type="date" name="date_debut" value="{{ filtres.date_debut }}">
     </label>
 
@@ -42,7 +42,7 @@
 </section>
 
 <section class="apercu-articles">
-  <h2>Apercu des articles</h2>
+  <h2>Aperçu des articles</h2>
 
   {% if articles_par_source %}
     <div class="colonnes-sources">
@@ -70,13 +70,13 @@
               {% endfor %}
             </ul>
           {% else %}
-            <p class="aucun-article-source">Aucun article recupere.</p>
+            <p class="aucun-article-source">Aucun article récupéré.</p>
           {% endif %}
         </article>
       {% endfor %}
     </div>
   {% else %}
-    <p>Aucun article trouve.</p>
+    <p>Aucun article trouvé.</p>
   {% endif %}
 </section>
 {% endblock %}
